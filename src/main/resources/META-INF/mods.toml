@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="verityai"
+version="0.1.0"
+displayName="Verity AI"
+authors="FYreDeft"
+description='''An original AI companion and slow-burn Minecraft horror experience. Forge 1.16.5. No coremod patches. OptiFine compatibility requires in-game testing.'''
+
+[[dependencies.verityai]]
+modId="forge"
+mandatory=true
+versionRange="[36.2.39,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.verityai]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.16.5]"
+ordering="NONE"
+side="BOTH"
