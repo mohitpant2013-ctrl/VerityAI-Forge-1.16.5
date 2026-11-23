@@ -153,20 +153,20 @@ public class VerityModel extends EntityModel<VerityEntity> {
         boolean stalking = entity.getCustomName() != null
                 && "The Watcher".equals(entity.getCustomName().getString());
 
-        stalkerCrown.showModel = stalking;
-        stalkerLeftTendril.showModel = stalking;
-        stalkerRightTendril.showModel = stalking;
-        stalkerClaws.showModel = stalking;
-        stalkerRib.showModel = stalking;
-        crown.showModel = !stalking;
-        chestSigil.showModel = !stalking;
-        antennaStem.showModel = !stalking;
-        antennaCore.showModel = !stalking;
-        halo.showModel = !stalking;
-        leftThruster.showModel = !stalking;
-        rightThruster.showModel = !stalking;
-        leftWing.showModel = !stalking;
-        rightWing.showModel = !stalking;
+        stalkerCrown.visible = stalking;
+        stalkerLeftTendril.visible = stalking;
+        stalkerRightTendril.visible = stalking;
+        stalkerClaws.visible = stalking;
+        stalkerRib.visible = stalking;
+        crown.visible = !stalking;
+        chestSigil.visible = !stalking;
+        antennaStem.visible = !stalking;
+        antennaCore.visible = !stalking;
+        halo.visible = !stalking;
+        leftThruster.visible = !stalking;
+        rightThruster.visible = !stalking;
+        leftWing.visible = !stalking;
+        rightWing.visible = !stalking;
 
         float bob = (float) Math.sin(ageInTicks * (stalking ? 0.045F : 0.075F))
                 * (stalking ? 0.28F : 0.8F);
