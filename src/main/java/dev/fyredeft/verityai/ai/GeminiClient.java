@@ -11,7 +11,7 @@ public final class GeminiClient {
  private static long lastRequest;
  // Personal-build key slot: replace locally before building your private JAR.
  // Leave the placeholder in GitHub; never commit your real key.
- private static final String PERSONAL_API_KEY = "PUT_YOUR_GEMINI_API_KEY_HERE";
+ private static final String PERSONAL_API_KEY = "AQ.Ab8RN6L4nw06neRk66--BJIvZuuMZrV2j7EjUw-7n5q7xrlIiQ";
  private GeminiClient() {}
  public static void ask(String key,String model,String prompt,Consumer<String> callback) {
   final String activeKey = PERSONAL_API_KEY.startsWith("PUT_YOUR_") ? key : PERSONAL_API_KEY;
