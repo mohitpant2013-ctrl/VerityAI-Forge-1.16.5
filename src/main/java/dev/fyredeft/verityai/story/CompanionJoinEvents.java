@@ -19,7 +19,7 @@ public final class CompanionJoinEvents {
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getPlayer() instanceof ServerPlayerEntity)) return;
         ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
-        if (player.getPersistentData().getBoolean("verityai_first_meeting")) return;
+        if (!VerityAI.AUTO_SPAWN.get() || player.getPersistentData().getBoolean("verityai_first_meeting")) return;
 
         ServerWorld world = (ServerWorld) player.level;
         Entity entity = VerityAI.VERITY.get().create(world);
