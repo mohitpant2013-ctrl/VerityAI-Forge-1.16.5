@@ -1,6 +1,6 @@
 buildscript {
     repositories { maven { url = 'https://maven.minecraftforge.net' }; mavenCentral() }
-    dependencies { classpath 'net.minecraftforge.gradle:ForgeGradle:4.1.16' }
+    dependencies { classpath 'net.minecraftforge.gradle:ForgeGradle:5.1.77' }
 }
 apply plugin: 'net.minecraftforge.gradle'
 version = '0.1.0'
@@ -9,7 +9,7 @@ archivesBaseName = 'VerityAI'
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava { sourceCompatibility = targetCompatibility = '1.8' }
 minecraft {
-    mappings channel: 'official', version: '1.16.5'
+    mappings channel: 'snapshot', version: '20210309-1.16.5'
     runs {
         client { workingDirectory project.file('run'); property 'forge.logging.console.level', 'debug'; mods { verityai { source sourceSets.main } } }
         server { workingDirectory project.file('run'); property 'forge.logging.console.level', 'debug'; mods { verityai { source sourceSets.main } } }
