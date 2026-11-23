@@ -18,3 +18,21 @@ minecraft {
 repositories { maven { url = 'https://maven.minecraftforge.net' }; mavenCentral() }
 dependencies { minecraft 'net.minecraftforge:forge:1.16.5-36.2.42' }
 jar { manifest { attributes(['Specification-Title':'verityai','Specification-Vendor':'FYreDeft','Specification-Version':'1','Implementation-Title':project.name,'Implementation-Version':project.version]) } }
+
+// Decode the hand-authored pixel-art atlas into the PNG resource expected by Minecraft.
+// Keeping the source atlas as base64 text allows the resource to be versioned safely
+// through text-only repository APIs while the built JAR contains a normal PNG.
+def verityAtlasSource = file('src/main/resources/assets/verityai/textures/entity/verity.png.b64')
+def verityAtlasOutput = file("$buildDir/generated/verityResources/assets/verityai/textures/entity/verity.png")
+
+task generateVerityAtlas {
+    inputs.file verityAtlasSource
+    outputs.file verityAtlasOutput
+    doLast {
+        verityAtlasOutput.parentFile.mkdirs()
+        verityAtlasOutput.bytes = verityAtlasSource.text.trim().decodeBase64()
+    }
+}
+
+sourceSets.main.resources.srcDir("$buildDir/generated/verityResources")
+processResources.dependsOn generateVerityAtlas
