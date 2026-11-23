@@ -19,7 +19,7 @@ public final class PlayerJournalEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayerEntity)) return;
         ServerPlayerEntity player = (ServerPlayerEntity) event.player;
-        if (player.level.isClientSide || player.tickCount % 1200 != 0) return;
+        if (player.level.isClientSide || player.tickCount % 100 != 0) return;
 
         CompoundNBT data = player.getPersistentData();
         ResourceLocation biomeId = player.level.getBiome(player.blockPosition()).getRegistryName();
