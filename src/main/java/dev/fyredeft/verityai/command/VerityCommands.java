@@ -31,7 +31,13 @@ public class VerityCommands {
     String prompt=StringArgumentType.getString(ctx,"message");
     int trust=player.getPersistentData().getInt("verityai_trust");
     int nights=player.getPersistentData().getInt("verityai_nights_slept");
-    prompt="Minecraft-only player context: trust="+trust+", nights slept="+nights+". Player asks: "+prompt;
+    net.minecraft.nbt.CompoundNBT memory=player.getPersistentData();
+    prompt="Minecraft-only player context: trust="+trust+", nights slept="+nights+
+      ", last biome="+memory.getString("verityai_last_biome")+
+      ", last dimension="+memory.getString("verityai_last_dimension")+
+      ", last coordinates="+memory.getInt("verityai_last_x")+","+memory.getInt("verityai_last_y")+","+memory.getInt("verityai_last_z")+
+      ". Recent biome journal="+memory.getList("verityai_biome_journal",8).toString()+
+      ". Player asks: "+prompt;
     String model=VerityAI.MODEL.get();
     ctx.getSource().sendSuccess(new StringTextComponent("Verity is thinking..."),false);
     GeminiClient.ask(key,model,prompt,answer->ctx.getSource().getServer().execute(()->ctx.getSource().sendSuccess(new StringTextComponent("Verity: "+answer),false)));
@@ -41,6 +47,16 @@ public class VerityCommands {
     ServerPlayerEntity p=ctx.getSource().getPlayerOrException();
     net.minecraft.nbt.CompoundNBT n=p.getPersistentData();
     ctx.getSource().sendSuccess(new StringTextComponent("Verity remembers: trust "+n.getInt("verityai_trust")+", nights slept "+n.getInt("verityai_nights_slept")+", last sleep at "+n.getInt("verityai_last_sleep_x")+", "+n.getInt("verityai_last_sleep_y")+", "+n.getInt("verityai_last_sleep_z")+"."),false);
+    return 1;
+   }))
+   .then(Commands.literal("journal").executes(ctx->{
+    ServerPlayerEntity p=ctx.getSource().getPlayerOrException();
+    net.minecraft.nbt.CompoundNBT n=p.getPersistentData();
+    String biomes=n.getList("verityai_biome_journal",8).toString();
+    ctx.getSource().sendSuccess(new StringTextComponent("Verity's journal | Last biome: "+n.getString("verityai_last_biome")+
+      " | Dimension: "+n.getString("verityai_last_dimension")+" | Last known position: "+
+      n.getInt("verityai_last_x")+", "+n.getInt("verityai_last_y")+", "+n.getInt("verityai_last_z")+
+      " | Visited biomes: "+biomes),false);
     return 1;
    }))
    .then(Commands.literal("status").executes(ctx->{
