@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class VerityRenderer extends MobRenderer<VerityEntity, VerityModel> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("minecraft", "textures/entity/slime/slime.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("minecraft", "textures/block/yellow_concrete.png");
     public VerityRenderer(EntityRendererManager manager) {
         super(manager, new VerityModel(), 0.3F);
     }
