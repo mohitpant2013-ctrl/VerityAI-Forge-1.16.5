@@ -25,13 +25,13 @@ public class VerityEntity extends CreatureEntity {
     public UUID getOwnerUUID() { return ownerUUID; }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT tag) {
+    public void addAdditionalSaveData(CompoundNBT tag) {
         super.addAdditionalSaveData(tag);
         if (ownerUUID != null) tag.putUUID("VerityOwner", ownerUUID);
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundNBT tag) {
+    public void readAdditionalSaveData(CompoundNBT tag) {
         super.readAdditionalSaveData(tag);
         if (tag.hasUUID("VerityOwner")) ownerUUID = tag.getUUID("VerityOwner");
     }
