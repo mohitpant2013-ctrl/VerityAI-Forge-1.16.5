@@ -68,4 +68,59 @@ public final class BuildActions {
         player.sendMessage(new net.minecraft.util.text.StringTextComponent(
             "Verity: A small camp. We can stay here until morning."), player.getUUID());
     }
+
+    public static void buildFarm(ServerPlayerEntity player) {
+        ServerWorld world = player.getLevel();
+        BlockPos base = player.blockPosition().offset(4, 0, 4);
+        for (int x = -2; x <= 2; x++) {
+            for (int z = -2; z <= 2; z++) {
+                BlockPos plot = base.offset(x, 0, z);
+                if (x == 0 && z == 0) {
+                    world.setBlock(plot, Blocks.WATER.defaultBlockState(), 3);
+                } else {
+                    world.setBlock(plot, Blocks.FARMLAND.defaultBlockState(), 3);
+                    world.setBlock(plot.above(), Blocks.WHEAT.defaultBlockState()
+                        .setValue(net.minecraft.block.CropsBlock.AGE, 7), 3);
+                }
+            }
+        }
+        player.sendMessage(new net.minecraft.util.text.StringTextComponent(
+            "Verity: I planted a small wheat patch. It should keep growing."), player.getUUID());
+    }
+
+    public static void buildGarden(ServerPlayerEntity player) {
+        ServerWorld world = player.getLevel();
+        BlockPos base = player.blockPosition().offset(3, 0, 3);
+        for (int x = -2; x <= 2; x++) {
+            for (int z = -2; z <= 2; z++) {
+                BlockPos flower = base.offset(x, 0, z);
+                world.setBlock(flower, Blocks.GRASS_BLOCK.defaultBlockState(), 3);
+                if ((x + z) % 3 == 0) world.setBlock(flower.above(), Blocks.POPPY.defaultBlockState(), 3);
+                else if ((x * z) % 3 == 0) world.setBlock(flower.above(), Blocks.DANDELION.defaultBlockState(), 3);
+                else if ((x - z) % 4 == 0) world.setBlock(flower.above(), Blocks.ALLIUM.defaultBlockState(), 3);
+            }
+        }
+        player.sendMessage(new net.minecraft.util.text.StringTextComponent(
+            "Verity: A little garden. The flowers make this place feel less empty."), player.getUUID());
+    }
+
+    public static void buildWatchtower(ServerPlayerEntity player) {
+        ServerWorld world = player.getLevel();
+        BlockPos base = player.blockPosition().offset(3, 0, 3);
+        for (int y = 0; y <= 5; y++) {
+            world.setBlock(base.offset(-1, y, -1), Blocks.OAK_LOG.defaultBlockState(), 3);
+            world.setBlock(base.offset(1, y, -1), Blocks.OAK_LOG.defaultBlockState(), 3);
+            world.setBlock(base.offset(-1, y, 1), Blocks.OAK_LOG.defaultBlockState(), 3);
+            world.setBlock(base.offset(1, y, 1), Blocks.OAK_LOG.defaultBlockState(), 3);
+        }
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                world.setBlock(base.offset(x, 6, z), Blocks.OAK_PLANKS.defaultBlockState(), 3);
+            }
+        }
+        world.setBlock(base.offset(0, 7, 0), Blocks.TORCH.defaultBlockState(), 3);
+        player.sendMessage(new net.minecraft.util.text.StringTextComponent(
+            "Verity: A lookout. You can see a little farther from up there."), player.getUUID());
+    }
+
 }
