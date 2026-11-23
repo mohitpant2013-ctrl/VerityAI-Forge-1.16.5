@@ -34,6 +34,11 @@ public class VerityModel extends EntityModel<VerityEntity> {
     private final ModelRenderer haloRight;
     private final ModelRenderer leftThruster;
     private final ModelRenderer rightThruster;
+    private final ModelRenderer stalkerCrown;
+    private final ModelRenderer stalkerLeftTendril;
+    private final ModelRenderer stalkerRightTendril;
+    private final ModelRenderer stalkerClaws;
+    private final ModelRenderer stalkerRib;
 
     public VerityModel() {
         texWidth = 64;
@@ -101,6 +106,30 @@ public class VerityModel extends EntityModel<VerityEntity> {
         halo.setPos(0.0F, -6.1F, 0.0F);
         root.addChild(halo);
 
+        // A second silhouette built from actual cuboids, not particles.
+        stalkerCrown = new ModelRenderer(this, 0, 16);
+        stalkerCrown.addBox(-4.0F, -8.2F, -2.2F, 8.0F, 3.0F, 4.4F);
+        root.addChild(stalkerCrown);
+
+        stalkerLeftTendril = new ModelRenderer(this, 0, 32);
+        stalkerLeftTendril.setPos(-3.0F, -0.2F, 1.8F);
+        stalkerLeftTendril.addBox(-1.1F, -0.5F, 0.0F, 1.2F, 8.0F, 1.1F);
+        root.addChild(stalkerLeftTendril);
+
+        stalkerRightTendril = new ModelRenderer(this, 0, 32);
+        stalkerRightTendril.setPos(3.0F, -0.2F, 1.8F);
+        stalkerRightTendril.addBox(-0.1F, -0.5F, 0.0F, 1.2F, 8.0F, 1.1F);
+        root.addChild(stalkerRightTendril);
+
+        stalkerClaws = new ModelRenderer(this, 24, 32);
+        stalkerClaws.addBox(-4.6F, 2.0F, -1.8F, 1.0F, 4.0F, 1.0F);
+        stalkerClaws.addBox(3.6F, 2.0F, -1.8F, 1.0F, 4.0F, 1.0F);
+        root.addChild(stalkerClaws);
+
+        stalkerRib = new ModelRenderer(this, 40, 32);
+        stalkerRib.addBox(-2.2F, 3.0F, -2.9F, 4.4F, 3.0F, 0.8F);
+        root.addChild(stalkerRib);
+
         haloFront = new ModelRenderer(this, 24, 32);
         haloFront.addBox(-1.8F, -0.2F, -2.3F, 3.6F, 0.4F, 0.45F);
         halo.addChild(haloFront);
@@ -121,16 +150,45 @@ public class VerityModel extends EntityModel<VerityEntity> {
     @Override
     public void setupAnim(VerityEntity entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float netHeadYaw, float headPitch) {
-        float bob = (float) Math.sin(ageInTicks * 0.075F) * 0.8F;
+        boolean stalking = entity.getCustomName() != null
+                && "The Watcher".equals(entity.getCustomName().getString());
+
+        stalkerCrown.showModel = stalking;
+        stalkerLeftTendril.showModel = stalking;
+        stalkerRightTendril.showModel = stalking;
+        stalkerClaws.showModel = stalking;
+        stalkerRib.showModel = stalking;
+        crown.showModel = !stalking;
+        chestSigil.showModel = !stalking;
+        antennaStem.showModel = !stalking;
+        antennaCore.showModel = !stalking;
+        halo.showModel = !stalking;
+        leftThruster.showModel = !stalking;
+        rightThruster.showModel = !stalking;
+        leftWing.showModel = !stalking;
+        rightWing.showModel = !stalking;
+
+        float bob = (float) Math.sin(ageInTicks * (stalking ? 0.045F : 0.075F))
+                * (stalking ? 0.28F : 0.8F);
         float drift = (float) Math.sin(ageInTicks * 0.035F) * 0.09F;
         float wingBeat = (float) Math.sin(ageInTicks * 0.16F) * 0.22F;
+        float tendrilSway = (float) Math.sin(ageInTicks * 0.075F) * 0.16F;
 
         root.y = 16.0F + bob;
         root.yRot = drift + netHeadYaw * 0.0025F;
-        root.xRot = (float) Math.sin(ageInTicks * 0.045F) * 0.035F;
+        root.xRot = stalking
+                ? (float) Math.sin(ageInTicks * 0.025F) * 0.018F
+                : (float) Math.sin(ageInTicks * 0.045F) * 0.035F;
 
-        leftWing.zRot = wingBeat;
-        rightWing.zRot = -wingBeat;
+        stalkerCrown.yRot = (float) Math.sin(ageInTicks * 0.03F) * 0.035F;
+        stalkerLeftTendril.zRot = -0.10F + tendrilSway;
+        stalkerRightTendril.zRot = 0.10F - tendrilSway;
+        stalkerLeftTendril.xRot = (float) Math.sin(ageInTicks * 0.055F) * 0.10F;
+        stalkerRightTendril.xRot = -stalkerLeftTendril.xRot;
+        stalkerClaws.xRot = (float) Math.sin(ageInTicks * 0.04F) * 0.025F;
+
+        leftWing.zRot = stalking ? 0.0F : wingBeat;
+        rightWing.zRot = stalking ? 0.0F : -wingBeat;
         leftWing.xRot = (float) Math.sin(ageInTicks * 0.11F) * 0.07F;
         rightWing.xRot = -leftWing.xRot;
 
