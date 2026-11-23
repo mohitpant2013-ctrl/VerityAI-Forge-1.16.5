@@ -4,7 +4,7 @@ license="All Rights Reserved"
 
 [[mods]]
 modId="verityai"
-version="0.1.0"
+version="0.2.0"
 displayName="Verity AI"
 authors="FYreDeft"
 description='''An original AI companion and slow-burn Minecraft horror experience. Forge 1.16.5. No coremod patches. OptiFine compatibility requires in-game testing.'''
