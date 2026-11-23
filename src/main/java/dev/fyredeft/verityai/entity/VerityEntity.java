@@ -4,7 +4,6 @@ import dev.fyredeft.verityai.VerityAI;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -41,7 +40,6 @@ public class VerityEntity extends CreatureEntity {
     protected void registerGoals() {
         goalSelector.addGoal(1, new WaterAvoidingRandomWalkingGoal(this, 0.85D));
         goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 16.0F));
-        goalSelector.addGoal(3, new RandomLookAroundGoal(this));
     }
 
     @Override
