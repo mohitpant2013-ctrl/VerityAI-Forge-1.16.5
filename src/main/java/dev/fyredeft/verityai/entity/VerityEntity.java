@@ -21,7 +21,6 @@ public class VerityEntity extends CreatureEntity {
         setCustomName(new StringTextComponent("Verity"));
     }
 
-    @Override
     public void setOwnerUUID(UUID owner) { this.ownerUUID = owner; }
     public UUID getOwnerUUID() { return ownerUUID; }
 
