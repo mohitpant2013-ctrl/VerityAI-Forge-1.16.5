@@ -27,7 +27,7 @@ Animated arrival crate, richer mood/personality, persistent chat memory, house/f
 3. Keep the key private. Never commit the config or embed the key in a shared JAR.
 4. Restart and use /verity ask hello.
 
-Default model: gemini-3.8-flash. Model access and quotas depend on the Google AI Studio account and can change.
+Default model: `gemini-2.5-flash`. You can change the model ID in the local config file if your AI Studio key has access to another Gemini model. Model access and quotas depend on the Google AI Studio account and can change.
 
 ## Build
 Use JDK 8 and Gradle 6.9.4, then run gradle build. The JAR is written to build/libs/.
