@@ -28,7 +28,7 @@ public class VerityCommands {
    .then(Commands.literal("ask").then(Commands.argument("message",StringArgumentType.greedyString()).executes(ctx->{
     String key=VerityAI.API_KEY.get(); if(key==null||key.trim().isEmpty()){ctx.getSource().sendFailure(new StringTextComponent("Set apiKey in config/verityai-common.toml, then restart."));return 0;}
     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
-    String prompt=StringArgumentType.getString(ctx,"message");
+    final String playerQuestion=StringArgumentType.getString(ctx,"message");
     int trust=player.getPersistentData().getInt("verityai_trust");
     int nights=player.getPersistentData().getInt("verityai_nights_slept");
     net.minecraft.nbt.CompoundNBT memory=player.getPersistentData();
@@ -37,10 +37,19 @@ public class VerityCommands {
       ", last dimension="+memory.getString("verityai_last_dimension")+
       ", last coordinates="+memory.getInt("verityai_last_x")+","+memory.getInt("verityai_last_y")+","+memory.getInt("verityai_last_z")+
       ". Recent biome journal="+memory.getList("verityai_biome_journal",8).toString()+
-      ". Player asks: "+prompt;
+      ". Recent conversation="+memory.getList("verityai_chat_memory",8).toString()+
+      ". Player asks: "+playerQuestion;
     String model=VerityAI.MODEL.get();
     ctx.getSource().sendSuccess(new StringTextComponent("Verity is thinking..."),false);
-    GeminiClient.ask(key,model,prompt,answer->ctx.getSource().getServer().execute(()->ctx.getSource().sendSuccess(new StringTextComponent("Verity: "+answer),false)));
+    GeminiClient.ask(key,model,prompt,answer->ctx.getSource().getServer().execute(()->{
+     net.minecraft.nbt.CompoundNBT data=player.getPersistentData();
+     net.minecraft.nbt.ListNBT chat=data.getList("verityai_chat_memory",8);
+     chat.add(net.minecraft.nbt.StringNBT.valueOf("You: "+playerQuestion));
+     chat.add(net.minecraft.nbt.StringNBT.valueOf("Verity: "+answer));
+     while(chat.size()>10) chat.remove(0);
+     data.put("verityai_chat_memory",chat);
+     player.sendMessage(new StringTextComponent("Verity: "+answer),player.getUUID());
+    }));
     return 1;
    })))
    .then(Commands.literal("memory").executes(ctx->{
