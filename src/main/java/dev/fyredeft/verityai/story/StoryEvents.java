@@ -14,7 +14,13 @@ public class StoryEvents {
   ServerPlayerEntity player=(ServerPlayerEntity)event.getPlayer(); if(player.level.isClientSide)return;
   CompoundNBT data=player.getPersistentData(); int nights=data.getInt("verityai_nights_slept")+1; data.putInt("verityai_nights_slept",nights);
   data.putInt("verityai_last_sleep_x",player.blockPosition().getX()); data.putInt("verityai_last_sleep_y",player.blockPosition().getY()); data.putInt("verityai_last_sleep_z",player.blockPosition().getZ());
-  if(nights==3) player.sendMessage(new StringTextComponent("Verity: You always wake up in the same place. I wonder what happens when you don't."),player.getUUID());
-  else if(nights>3&&nights%2==0) player.sendMessage(new StringTextComponent("Verity: I remembered where you slept. I was nearby."),player.getUUID());
+  int intensity=VerityAI.HORROR_INTENSITY.get();
+  if(intensity==0)return;
+  if(nights==3) player.sendMessage(new StringTextComponent(intensity>=3
+   ? "Verity: I was here before you woke up."
+   : "Verity: You always wake up in the same place. I wonder what happens when you don't."),player.getUUID());
+  else if(nights>3&&nights%2==0) player.sendMessage(new StringTextComponent(intensity>=2
+   ? "Verity: I remembered where you slept. I was nearby."
+   : "Verity: Good morning. Again."),player.getUUID());
  }
 }
