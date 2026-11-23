@@ -32,7 +32,7 @@ public class VerityCommands {
     int trust=player.getPersistentData().getInt("verityai_trust");
     int nights=player.getPersistentData().getInt("verityai_nights_slept");
     net.minecraft.nbt.CompoundNBT memory=player.getPersistentData();
-    prompt="Minecraft-only player context: trust="+trust+", nights slept="+nights+
+    String prompt="Minecraft-only player context: trust="+trust+", nights slept="+nights+
       ", last biome="+memory.getString("verityai_last_biome")+
       ", last dimension="+memory.getString("verityai_last_dimension")+
       ", last coordinates="+memory.getInt("verityai_last_x")+","+memory.getInt("verityai_last_y")+","+memory.getInt("verityai_last_z")+
