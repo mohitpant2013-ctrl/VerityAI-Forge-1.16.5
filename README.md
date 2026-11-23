@@ -42,11 +42,11 @@ An original companion-and-slow-burn-horror mod by FYreDeft. It uses broad genre 
 - `/verity status`
 
 ## Gemini setup
-1. Launch the mod once to generate `config/verityai-common.toml`.
-2. Close Minecraft and set `apiKey` locally.
-3. Keep the key private. Never commit the config or embed the key in a shared JAR.
-4. The `model` setting defaults to `gemini-2.5-flash`. Change it only to a model your AI Studio key can access.
-5. Restart Minecraft and try `/verity ask hello`.
+1. For a personal JAR with the key embedded, edit `PERSONAL_API_KEY` in `src/main/java/dev/fyredeft/verityai/ai/GeminiClient.java` on your own machine.
+2. Replace only the placeholder with your key, then build your private JAR. Do not commit the edited file or share that JAR.
+3. If the source constant is left as the placeholder, the mod falls back to `config/verityai-common.toml` as before.
+4. The model defaults to `gemini-2.5-flash`. Change it only to a model your AI Studio key can access.
+5. Never paste your key into chat or a public repository.
 
 API access and free-tier quotas depend on the Google AI Studio account and can change.
 
