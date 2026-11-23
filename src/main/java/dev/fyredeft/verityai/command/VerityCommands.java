@@ -20,11 +20,17 @@ public class VerityCommands {
     net.minecraft.util.math.vector.Vector3d p=ctx.getSource().getPosition(); entity.moveTo(p.x,p.y,p.z,0,0); world.addFreshEntity(entity);
     ctx.getSource().sendSuccess(new StringTextComponent("A small yellow visitor has arrived."),true); return 1;
    }))
-   .then(Commands.literal("build").then(Commands.literal("hut").executes(ctx->{
-    ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
-    BuildActions.buildStarterHut(player);
-    return 1;
-   })))
+   .then(Commands.literal("build")
+    .then(Commands.literal("hut").executes(ctx->{
+     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
+     BuildActions.buildStarterHut(player);
+     return 1;
+    }))
+    .then(Commands.literal("camp").executes(ctx->{
+     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
+     BuildActions.buildCamp(player);
+     return 1;
+    })))
    .then(Commands.literal("ask").then(Commands.argument("message",StringArgumentType.greedyString()).executes(ctx->{
     String key=VerityAI.API_KEY.get(); if(key==null||key.trim().isEmpty()){ctx.getSource().sendFailure(new StringTextComponent("Set apiKey in config/verityai-common.toml, then restart."));return 0;}
     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
@@ -66,6 +72,11 @@ public class VerityCommands {
       " | Dimension: "+n.getString("verityai_last_dimension")+" | Last known position: "+
       n.getInt("verityai_last_x")+", "+n.getInt("verityai_last_y")+", "+n.getInt("verityai_last_z")+
       " | Visited biomes: "+biomes),false);
+    return 1;
+   }))
+   .then(Commands.literal("help").executes(ctx->{
+    ctx.getSource().sendSuccess(new StringTextComponent(
+     "Verity commands: /verity summon (OP), /verity ask <message>, /verity build hut, /verity build camp, /verity memory, /verity journal, /verity status"),false);
     return 1;
    }))
    .then(Commands.literal("status").executes(ctx->{
