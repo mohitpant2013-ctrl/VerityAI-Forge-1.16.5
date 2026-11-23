@@ -59,7 +59,7 @@ public class VerityConfigScreen extends Screen {
 
     @Override
     public void onClose() {
-        this.minecraft.displayGuiScreen(this.parent);
+        this.minecraft.setScreen(this.parent);
     }
 
     @Override
