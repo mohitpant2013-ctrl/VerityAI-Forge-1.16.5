@@ -10,16 +10,15 @@ An original companion-and-slow-burn-horror mod by FYreDeft. It uses broad genre 
 - No coremod or invasive renderer patches. OptiFine compatibility is a design goal and still requires an in-game test.
 
 ## Implemented in source
-- Original layered brass automaton model with a custom pixel-art atlas, cyan faceplate, chest sigil, stabilizer wings, thrusters, antenna core, and segmented halo.
-- Hover bob, gentle yaw drift, wing-beat, antenna motion, and a rotating halo animation.
-- Dedicated mod-owned texture resource generated into the JAR at build time; no vanilla block texture dependency.
+- Original layered brass automaton companion model with a dedicated 64x64 pixel-art atlas.
+- Separate Stalker silhouette with a dark custom atlas, broken crown, trailing tendrils, claws, and ribbed lower frame.
+- Stage-aware animation: smooth hover, wing beats for the companion, and slow tendril sway for the Stalker.
+- Both texture atlases are decoded into normal PNG resources during the Gradle build; no vanilla block textures.
 - Standard Forge entity renderer with no coremod or OptiFine-specific hooks; OptiFine compatibility is designed for but still requires in-game verification.
 - Personal Verity companion automatically appears on a player's first join (configurable).
 - Per-player owner UUID is saved with the entity; each companion follows its own player.
-- Original floating golden cube model with fins, antenna, dark eyes, and mouth.
-- Gentle bobbing and idle movement animation.
-- Friendly follow behaviour before the third sleep.
-- After the third sleep, Verity becomes a distant, non-hostile watcher that keeps its distance and looks toward the player.
+- Friendly follow behaviour before the third sleep; the Stalker stage uses distance-keeping behaviour and never attacks.
+- Survival awareness: when the owner is hurt or has low health, friendly Verity moves closer and watches them.
 - Configurable horror intensity (0–3), horror enable/disable, watcher enable/disable, and auto-spawn.
 - Per-player trust and a capped two-diamond lifetime gift system.
 - Mood/status command, sleep count, last sleep coordinates, current biome, dimension, last known position, and recent biome journal.
@@ -54,4 +53,4 @@ API access and free-tier quotas depend on the Google AI Studio account and can c
 ## Build
 Use JDK 8 and Gradle 7.3.3, then run `gradle --no-daemon build`. The JAR is written to `build/libs/`. GitHub Actions also builds the mod and uploads a JAR artifact when the build succeeds.
 
-This repository is a playable-build candidate, not a runtime-verified release, until the JAR is tested in a real 1.16.5 client and server. In particular, verify the custom texture loads, the model is correctly positioned, and OptiFine does not interfere with rendering.
+This repository is a playable-build candidate, not a runtime-verified release, until the JAR is tested in a real 1.16.5 client and server. In particular, verify both texture atlases load, the two model forms are correctly positioned, and OptiFine does not interfere with rendering.
