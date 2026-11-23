@@ -26,6 +26,7 @@ public class VerityAI {
     public static final ForgeConfigSpec.ConfigValue<String> MODEL;
     public static final ForgeConfigSpec.BooleanValue HORROR_ENABLED;
     public static final ForgeConfigSpec.BooleanValue STALKER_ENABLED;
+    public static final ForgeConfigSpec.BooleanValue AUTO_SPAWN;
     public static final ForgeConfigSpec.IntValue HORROR_INTENSITY;
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -37,6 +38,7 @@ public class VerityAI {
         b.push("story");
         HORROR_ENABLED = b.define("horrorEnabled", true);
         STALKER_ENABLED = b.define("stalkerEnabled", true);
+        AUTO_SPAWN = b.define("autoSpawn", true);
         HORROR_INTENSITY = b.defineInRange("horrorIntensity", 2, 0, 3);
         b.pop();
         SPEC = b.build();
