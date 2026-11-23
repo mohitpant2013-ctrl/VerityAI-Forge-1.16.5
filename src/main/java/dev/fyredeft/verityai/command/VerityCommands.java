@@ -30,6 +30,21 @@ public class VerityCommands {
      ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
      BuildActions.buildCamp(player);
      return 1;
+    }))
+    .then(Commands.literal("farm").executes(ctx->{
+     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
+     BuildActions.buildFarm(player);
+     return 1;
+    }))
+    .then(Commands.literal("garden").executes(ctx->{
+     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
+     BuildActions.buildGarden(player);
+     return 1;
+    }))
+    .then(Commands.literal("watchtower").executes(ctx->{
+     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
+     BuildActions.buildWatchtower(player);
+     return 1;
     })))
    .then(Commands.literal("ask").then(Commands.argument("message",StringArgumentType.greedyString()).executes(ctx->{
     String key=VerityAI.API_KEY.get(); if(key==null||key.trim().isEmpty()){ctx.getSource().sendFailure(new StringTextComponent("Set apiKey in config/verityai-common.toml, then restart."));return 0;}
@@ -76,7 +91,7 @@ public class VerityCommands {
    }))
    .then(Commands.literal("help").executes(ctx->{
     ctx.getSource().sendSuccess(new StringTextComponent(
-     "Verity commands: /verity summon (OP), /verity ask <message>, /verity build hut, /verity build camp, /verity memory, /verity journal, /verity status"),false);
+     "Verity commands: /verity summon (OP), /verity ask <message>, /verity build hut, /verity build camp, /verity build farm, /verity build garden, /verity build watchtower, /verity memory, /verity journal, /verity status"),false);
     return 1;
    }))
    .then(Commands.literal("status").executes(ctx->{
