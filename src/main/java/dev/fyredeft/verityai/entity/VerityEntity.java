@@ -7,17 +7,37 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.StringTextComponent;
+import java.util.UUID;
 import net.minecraft.world.World;
 
 public class VerityEntity extends CreatureEntity {
     private int companionTicks;
+    private UUID ownerUUID;
 
     public VerityEntity(EntityType<? extends CreatureEntity> type, World world) {
         super(type, world);
         setPersistenceRequired();
+        setCustomName(new StringTextComponent("Verity"));
     }
 
     @Override
+    public void setOwnerUUID(UUID owner) { this.ownerUUID = owner; }
+    public UUID getOwnerUUID() { return ownerUUID; }
+
+    @Override
+    protected void addAdditionalSaveData(CompoundNBT tag) {
+        super.addAdditionalSaveData(tag);
+        if (ownerUUID != null) tag.putUUID("VerityOwner", ownerUUID);
+    }
+
+    @Override
+    protected void readAdditionalSaveData(CompoundNBT tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.hasUUID("VerityOwner")) ownerUUID = tag.getUUID("VerityOwner");
+    }
+
     protected void registerGoals() {
         goalSelector.addGoal(1, new WaterAvoidingRandomWalkingGoal(this, 0.85D));
         goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 16.0F));
@@ -30,7 +50,7 @@ public class VerityEntity extends CreatureEntity {
         companionTicks++;
         if (level.isClientSide || companionTicks % 80 != 0) return;
 
-        PlayerEntity player = level.getNearestPlayer(this, 32.0D);
+        PlayerEntity player = ownerUUID == null ? level.getNearestPlayer(this, 32.0D) : level.getPlayerByUUID(ownerUUID);
         if (player == null) return;
 
         int nights = player.getPersistentData().getInt("verityai_nights_slept");
