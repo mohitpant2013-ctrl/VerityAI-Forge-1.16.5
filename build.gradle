@@ -25,6 +25,9 @@ jar { manifest { attributes(['Specification-Title':'verityai','Specification-Ven
 def verityAtlasSource = file('src/main/resources/assets/verityai/textures/entity/verity.png.b64')
 def verityAtlasOutput = file("$buildDir/generated/verityResources/assets/verityai/textures/entity/verity.png")
 
+def stalkerAtlasSource = file('src/main/resources/assets/verityai/textures/entity/stalker.png.b64')
+def stalkerAtlasOutput = file("$buildDir/generated/verityResources/assets/verityai/textures/entity/stalker.png")
+
 task generateVerityAtlas {
     inputs.file verityAtlasSource
     outputs.file verityAtlasOutput
@@ -34,5 +37,14 @@ task generateVerityAtlas {
     }
 }
 
+task generateStalkerAtlas {
+    inputs.file stalkerAtlasSource
+    outputs.file stalkerAtlasOutput
+    doLast {
+        stalkerAtlasOutput.parentFile.mkdirs()
+        stalkerAtlasOutput.bytes = stalkerAtlasSource.text.trim().decodeBase64()
+    }
+}
+
 sourceSets.main.resources.srcDir("$buildDir/generated/verityResources")
-processResources.dependsOn generateVerityAtlas
+processResources.dependsOn generateVerityAtlas, generateStalkerAtlas
