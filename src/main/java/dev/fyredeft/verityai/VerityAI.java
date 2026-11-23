@@ -19,7 +19,7 @@ public class VerityAI {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
     public static final RegistryObject<EntityType<VerityEntity>> VERITY = ENTITIES.register("verity",
         () -> EntityType.Builder.of(VerityEntity::new, EntityClassification.CREATURE)
-            .sized(0.7F, 0.7F).clientTrackingRange(8).build("verityai:verity"));
+            .sized(1.0F, 1.0F).clientTrackingRange(8).build("verityai:verity"));
 
     public static final ForgeConfigSpec SPEC;
     public static final ForgeConfigSpec.ConfigValue<String> API_KEY;
