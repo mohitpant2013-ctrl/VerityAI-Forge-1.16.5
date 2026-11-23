@@ -53,7 +53,9 @@ public class VerityCommands {
     int trust=player.getPersistentData().getInt("verityai_trust");
     int nights=player.getPersistentData().getInt("verityai_nights_slept");
     net.minecraft.nbt.CompoundNBT memory=player.getPersistentData();
-    String prompt="Minecraft-only player context: trust="+trust+", nights slept="+nights+
+    String stage=nights<3 ? "Friendly companion stage: offer help and build trust." : "Watcher stage: speak subtly and strangely, but remain non-hostile.";
+    String mood=nights>=3 ? "Uneasy" : (trust>=2 ? "Happy" : "Curious");
+    String prompt="Story stage="+stage+", mood="+mood+". Minecraft-only player context: trust="+trust+", nights slept="+nights+
       ", last biome="+memory.getString("verityai_last_biome")+
       ", last dimension="+memory.getString("verityai_last_dimension")+
       ", last coordinates="+memory.getInt("verityai_last_x")+","+memory.getInt("verityai_last_y")+","+memory.getInt("verityai_last_z")+
