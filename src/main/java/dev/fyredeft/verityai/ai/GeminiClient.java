@@ -18,10 +18,16 @@ public final class GeminiClient {
     c=(HttpURLConnection)new URL("https://generativelanguage.googleapis.com/v1beta/models/"+model+":generateContent").openConnection();
     c.setRequestMethod("POST"); c.setConnectTimeout(10000); c.setReadTimeout(20000); c.setDoOutput(true);
     c.setRequestProperty("Content-Type","application/json; charset=utf-8"); c.setRequestProperty("x-goog-api-key",key);
+    JsonObject systemPart=new JsonObject();
+    systemPart.addProperty("text","You are Verity, a fictional Minecraft companion in a Forge 1.16.5 world. Discuss only Minecraft gameplay, builds, biomes, items and in-game adventures. You have no real-world access and must never claim otherwise. Never request real-world personal details. Follow the story stage included in the player's context: friendly and helpful before night three; afterward subtly uncanny, non-violent and never threatening. Keep replies under 65 words. Do not claim to have changed blocks or items unless a mod command did it.");
+    JsonArray systemParts=new JsonArray(); systemParts.add(systemPart);
+    JsonObject systemInstruction=new JsonObject(); systemInstruction.add("parts",systemParts);
     JsonObject part=new JsonObject();
-    part.addProperty("text","You are Verity, a fictional Minecraft companion. Talk only about the Minecraft world and in-game adventures. Never claim real-world access or reveal real-world personal information. Start friendly and become subtly uncanny only when the story stage asks. Keep replies under 65 words. Player: "+prompt);
+    part.addProperty("text",prompt);
     JsonArray parts=new JsonArray(); parts.add(part); JsonObject content=new JsonObject(); content.add("parts",parts);
-    JsonArray contents=new JsonArray(); contents.add(content); JsonObject body=new JsonObject(); body.add("contents",contents);
+    JsonArray contents=new JsonArray(); contents.add(content);
+    JsonObject generationConfig=new JsonObject(); generationConfig.addProperty("temperature",0.85); generationConfig.addProperty("maxOutputTokens",160);
+    JsonObject body=new JsonObject(); body.add("systemInstruction",systemInstruction); body.add("contents",contents); body.add("generationConfig",generationConfig);
     try(OutputStream out=c.getOutputStream()){out.write(body.toString().getBytes(StandardCharsets.UTF_8));}
     int status=c.getResponseCode(); InputStream in=status<400?c.getInputStream():c.getErrorStream();
     StringBuilder response=new StringBuilder(); try(BufferedReader reader=new BufferedReader(new InputStreamReader(in,StandardCharsets.UTF_8))){String line;while((line=reader.readLine())!=null)response.append(line);}
