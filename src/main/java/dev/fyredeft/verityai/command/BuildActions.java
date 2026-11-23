@@ -48,7 +48,6 @@ public final class BuildActions {
                 chest.setItem(2, new ItemStack(Items.WHEAT_SEEDS, 12));
                 chest.setItem(3, new ItemStack(Items.OAK_LOG, 16));
                 chest.setItem(4, new ItemStack(Items.WOODEN_PICKAXE, 1));
-                chest.setItem(5, new ItemStack(Items.WOODEN_AXE, 1));
                 player.getPersistentData().putBoolean("verityai_starter_kit", true);
             }
         }
