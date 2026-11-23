@@ -1,5 +1,6 @@
 package dev.fyredeft.verityai.entity;
 
+import dev.fyredeft.verityai.VerityAI;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.LookAtGoal;
@@ -33,6 +34,7 @@ public class VerityEntity extends CreatureEntity {
         if (player == null) return;
 
         int nights = player.getPersistentData().getInt("verityai_nights_slept");
+        if (nights >= 3 && !VerityAI.STALKER_ENABLED.get()) return;
         double distance = distanceToSqr(player);
 
         // Friendly stage: casually catch up when the player wanders away.
