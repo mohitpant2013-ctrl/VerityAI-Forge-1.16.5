@@ -30,7 +30,7 @@ public class VerityAI {
         b.push("ai");
         API_KEY = b.comment("Your private Gemini API key. Never share or commit this file.")
             .define("apiKey", "");
-        MODEL = b.define("model", "gemini-2.0-flash");
+        MODEL = b.define("model", "gemini-3.8-flash");
         b.pop();
         b.push("story");
         HORROR_ENABLED = b.define("horrorEnabled", true);
