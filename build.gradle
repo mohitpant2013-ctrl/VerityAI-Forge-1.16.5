@@ -15,5 +15,6 @@ minecraft {
         server { workingDirectory project.file('run'); property 'forge.logging.console.level', 'debug'; mods { verityai { source sourceSets.main } } }
     }
 }
-repositories { maven { url = 'https://maven.minecraftforge.net' }; mavenCentral() }\ndependencies { minecraft 'net.minecraftforge:forge:1.16.5-36.2.42' }
+repositories { maven { url = 'https://maven.minecraftforge.net' }; mavenCentral() }
+dependencies { minecraft 'net.minecraftforge:forge:1.16.5-36.2.42' }
 jar { manifest { attributes(['Specification-Title':'verityai','Specification-Vendor':'FYreDeft','Specification-Version':'1','Implementation-Title':project.name,'Implementation-Version':project.version]) } }
