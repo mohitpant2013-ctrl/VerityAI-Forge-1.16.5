@@ -5,10 +5,12 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
-/** Standard Forge entity renderer; no OptiFine hooks or coremod patches. */
+/** Standard Forge renderer with separate companion and Stalker atlases. */
 public class VerityRenderer extends MobRenderer<VerityEntity, VerityModel> {
-    private static final ResourceLocation TEXTURE =
+    private static final ResourceLocation VERITY_TEXTURE =
         new ResourceLocation("verityai", "textures/entity/verity.png");
+    private static final ResourceLocation STALKER_TEXTURE =
+        new ResourceLocation("verityai", "textures/entity/stalker.png");
 
     public VerityRenderer(EntityRendererManager manager) {
         super(manager, new VerityModel(), 0.25F);
@@ -16,6 +18,6 @@ public class VerityRenderer extends MobRenderer<VerityEntity, VerityModel> {
 
     @Override
     public ResourceLocation getTextureLocation(VerityEntity entity) {
-        return TEXTURE;
+        return entity.isStalkerStage() ? STALKER_TEXTURE : VERITY_TEXTURE;
     }
 }
