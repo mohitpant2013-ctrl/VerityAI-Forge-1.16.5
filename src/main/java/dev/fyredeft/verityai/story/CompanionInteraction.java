@@ -20,7 +20,8 @@ public class CompanionInteraction {
   player.getPersistentData().putInt("verityai_trust",trust);
   int gifts=player.getPersistentData().getInt("verityai_gifts");
   if(trust>=2 && gifts<2) {
-   ItemStack gift = new ItemStack(Items.DIAMOND,1);\n   if (!player.getInventory().add(gift)) player.drop(gift, false);
+   ItemStack gift = new ItemStack(Items.DIAMOND,1);
+   if (!player.getInventory().add(gift)) player.drop(gift, false);
    player.getPersistentData().putInt("verityai_gifts",gifts+1);
    player.sendMessage(new StringTextComponent("Verity: Here. Just one. Don't spend it all at once."),player.getUUID());
   } else if(trust<2) {
