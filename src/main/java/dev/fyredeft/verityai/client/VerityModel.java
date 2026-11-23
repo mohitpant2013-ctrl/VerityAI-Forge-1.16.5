@@ -74,11 +74,11 @@ public class VerityModel extends EntityModel<VerityEntity> {
         root.addChild(rightWing);
 
         leftWingTip = new ModelRenderer(this, 24, 32);
-        leftWingTip.addBox(-6.2F, -0.35F, -0.8F, 1.5F, 0.7F, 1.6F);
+        leftWingTip.addBox(-4.7F, -0.35F, -0.8F, 1.5F, 0.7F, 1.6F);
         leftWing.addChild(leftWingTip);
 
         rightWingTip = new ModelRenderer(this, 24, 32);
-        rightWingTip.addBox(4.7F, -0.35F, -0.8F, 1.5F, 0.7F, 1.6F);
+        rightWingTip.addBox(3.2F, -0.35F, -0.8F, 1.5F, 0.7F, 1.6F);
         rightWing.addChild(rightWingTip);
 
         leftThruster = new ModelRenderer(this, 24, 32);
@@ -102,19 +102,19 @@ public class VerityModel extends EntityModel<VerityEntity> {
         root.addChild(halo);
 
         haloFront = new ModelRenderer(this, 24, 32);
-        haloFront.addBox(-2.3F, -0.2F, -0.2F, 4.6F, 0.4F, 0.55F);
+        haloFront.addBox(-1.8F, -0.2F, -2.3F, 3.6F, 0.4F, 0.45F);
         halo.addChild(haloFront);
 
         haloBack = new ModelRenderer(this, 24, 32);
-        haloBack.addBox(-2.3F, -0.2F, -0.35F, 4.6F, 0.4F, 0.55F);
+        haloBack.addBox(-1.8F, -0.2F, 1.85F, 3.6F, 0.4F, 0.45F);
         halo.addChild(haloBack);
 
         haloLeft = new ModelRenderer(this, 24, 32);
-        haloLeft.addBox(-0.25F, -0.2F, -2.3F, 0.5F, 0.4F, 4.6F);
+        haloLeft.addBox(-2.3F, -0.2F, -1.8F, 0.45F, 0.4F, 3.6F);
         halo.addChild(haloLeft);
 
         haloRight = new ModelRenderer(this, 24, 32);
-        haloRight.addBox(-0.25F, -0.2F, -2.3F, 0.5F, 0.4F, 4.6F);
+        haloRight.addBox(1.85F, -0.2F, -1.8F, 0.45F, 0.4F, 3.6F);
         halo.addChild(haloRight);
     }
 
