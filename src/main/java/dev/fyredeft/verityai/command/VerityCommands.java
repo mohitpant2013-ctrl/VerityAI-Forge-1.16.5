@@ -18,36 +18,17 @@ public class VerityCommands {
    .then(Commands.literal("summon").requires(s->s.hasPermission(2)).executes(ctx->{
     ServerWorld world=ctx.getSource().getLevel(); Entity entity=VerityAI.VERITY.get().create(world); if(entity==null)return 0;
     net.minecraft.util.math.vector.Vector3d p=ctx.getSource().getPosition(); entity.moveTo(p.x,p.y,p.z,0,0); world.addFreshEntity(entity);
-    ctx.getSource().sendSuccess(new StringTextComponent("A small yellow visitor has arrived."),true); return 1;
+    ctx.getSource().sendSuccess(new StringTextComponent("A small visitor has arrived."),true); return 1;
    }))
    .then(Commands.literal("build")
-    .then(Commands.literal("hut").executes(ctx->{
-     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
-     BuildActions.buildStarterHut(player);
-     return 1;
-    }))
-    .then(Commands.literal("camp").executes(ctx->{
-     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
-     BuildActions.buildCamp(player);
-     return 1;
-    }))
-    .then(Commands.literal("farm").executes(ctx->{
-     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
-     BuildActions.buildFarm(player);
-     return 1;
-    }))
-    .then(Commands.literal("garden").executes(ctx->{
-     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
-     BuildActions.buildGarden(player);
-     return 1;
-    }))
-    .then(Commands.literal("watchtower").executes(ctx->{
-     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
-     BuildActions.buildWatchtower(player);
-     return 1;
-    })))
+    .then(Commands.literal("hut").executes(ctx->{ BuildActions.buildStarterHut(ctx.getSource().getPlayerOrException()); return 1; }))
+    .then(Commands.literal("camp").executes(ctx->{ BuildActions.buildCamp(ctx.getSource().getPlayerOrException()); return 1; }))
+    .then(Commands.literal("farm").executes(ctx->{ BuildActions.buildFarm(ctx.getSource().getPlayerOrException()); return 1; }))
+    .then(Commands.literal("garden").executes(ctx->{ BuildActions.buildGarden(ctx.getSource().getPlayerOrException()); return 1; }))
+    .then(Commands.literal("watchtower").executes(ctx->{ BuildActions.buildWatchtower(ctx.getSource().getPlayerOrException()); return 1; })))
    .then(Commands.literal("ask").then(Commands.argument("message",StringArgumentType.greedyString()).executes(ctx->{
-    String key=VerityAI.API_KEY.get(); if(key==null||key.trim().isEmpty()){ctx.getSource().sendFailure(new StringTextComponent("Set apiKey in config/verityai-common.toml, then restart."));return 0;}
+    String key=VerityAI.API_KEY.get();
+    if(key==null||key.trim().isEmpty()){ctx.getSource().sendFailure(new StringTextComponent("Open Mods > Verity AI > Config and enter your Gemini API key."));return 0;}
     ServerPlayerEntity player=ctx.getSource().getPlayerOrException();
     final String playerQuestion=StringArgumentType.getString(ctx,"message");
     int trust=player.getPersistentData().getInt("verityai_trust");
